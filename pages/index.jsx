@@ -13,6 +13,12 @@ export default function Home() {
       <NavBar />
       <h1>hello {counter}</h1>
       <button onClick={onClick}>+</button>
+
+      {/* <style jsx>{`
+        nav {
+          color: #fff;
+        }
+      `}</style> */}
     </div>
   );
 }
