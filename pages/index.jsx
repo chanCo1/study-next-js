@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect } from "react";
-import NavBar from "../components/NavBar";
 
 export default function Home() {
   const [counter, setCounter] = useState(0);
@@ -10,15 +9,8 @@ export default function Home() {
 
   return (
     <div>
-      <NavBar />
-      <h1>hello {counter}</h1>
+      <h1 className="active">hello {counter}</h1>
       <button onClick={onClick}>+</button>
-
-      {/* <style jsx>{`
-        nav {
-          color: #fff;
-        }
-      `}</style> */}
     </div>
   );
 }
