@@ -1,25 +1,38 @@
-import { useState, useEffect } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useState, useEffect, useCallback } from "react";
 import Seo from "../components/Seo";
 
 /**
  * 메인 페이지
- * @returns 
+ * @returns
  */
 export default function Home({ results }) {
+  const router = useRouter();
+
+  const onClickDetail = (id, title) => {
+    router.push({
+      pathname: `/movies/${id}`,
+      query: {
+        title
+      }
+    }, `/movies/${id}`);
+  };
 
   return (
     <div className="container">
       <Seo title={"Home"} />
 
-      {/* {!movies && <h4>Loading...</h4>} */}
-      {results?.map((movie) => {
-        return (
-          <div key={movie.id} className="movie">
-            <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
-            <h4>{movie.original_title}</h4>
-          </div>
-        );
-      })}
+      {results?.map(({ id, original_title, poster_path }) => (
+        <div className="movie" key={id} onClick={() => onClickDetail(id, original_title)}>
+          <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} />
+          <h4>
+            <Link href={`/movies/${id}`} legacyBehavior >
+              <a>{original_title}</a>
+            </Link>
+          </h4>
+        </div>
+      ))}
 
       <style jsx>{`
         .container {
@@ -57,11 +70,13 @@ export default function Home({ results }) {
  *              이 함수 안에서 작성된 코드는 서버에서 돌아간다
  */
 export async function getServerSideProps() {
-  const { results } = await (await fetch("http://localhost:3000/api/movies")).json();
+  const { results } = await (
+    await fetch("http://localhost:3000/api/movies")
+  ).json();
 
   return {
     props: {
       results,
-    }
-  }
+    },
+  };
 }
