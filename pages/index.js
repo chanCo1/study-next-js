@@ -11,12 +11,7 @@ export default function Home({ results }) {
   const router = useRouter();
 
   const onClickDetail = (id, title) => {
-    router.push({
-      pathname: `/movies/${id}`,
-      query: {
-        title
-      }
-    }, `/movies/${id}`);
+    router.push({ pathname: `/movies/${title}/${id}` });
   };
 
   return (
@@ -24,10 +19,14 @@ export default function Home({ results }) {
       <Seo title={"Home"} />
 
       {results?.map(({ id, original_title, poster_path }) => (
-        <div className="movie" key={id} onClick={() => onClickDetail(id, original_title)}>
+        <div
+          className="movie"
+          key={id}
+          onClick={() => onClickDetail(id, original_title)}
+        >
           <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} />
           <h4>
-            <Link href={`/movies/${id}`} legacyBehavior >
+            <Link href={`/movies/${original_title}/${id}`} legacyBehavior>
               <a>{original_title}</a>
             </Link>
           </h4>
