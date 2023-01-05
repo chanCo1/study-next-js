@@ -13,8 +13,6 @@ export default function Detail({ params }) {
 }
 
 export function getServerSideProps({ params: { params } }) {
-  console.log(params);
-
   return {
     props: {
       params,
